@@ -19,19 +19,20 @@ describe(`Input form`, () => {
 
   context(`Form submission`, () => {
     it.only(`adds a new todo on submit`, () => {
+      const newItem = 'buy eggs'
       cy.server()
       cy.route('POST', '/api/todos', {
-        name: 'buy eggs',
+        name: newItem,
         id: 1, 
         isComplete: false 
       })
       cy.get('.new-todo')
-        .type('buy eggs')
+        .type(newItem)
         .type('{enter}')
         .should('have.value', '')
       cy.get('.todo-list li')
         .should('have.length', 1)
-        .and('contain', 'buy eggs')
+        .and('contain', newItem)
     })
   })
 })
