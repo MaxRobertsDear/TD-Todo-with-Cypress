@@ -1,3 +1,5 @@
+import { isContext } from "vm";
+
 describe(`Input form`, () => {
   
   beforeEach(() => {
@@ -13,5 +15,19 @@ describe(`Input form`, () => {
     cy.get(`.new-todo`)
       .type(typedText)
       .should(`have.value`, typedText)
+  })
+
+  context(`Form submission`, () => {
+    it.only(`adds a new todo on submit`, () => {
+      cy.server()
+      cy.route('POST', '/api/todos', {
+        name: 'buy eggs',
+        id: 1, 
+        isComplete: false 
+      })
+      cy.get('.new-todo')
+        .type('buy eggs')
+        .type('{enter}')
+    })
   })
 })
